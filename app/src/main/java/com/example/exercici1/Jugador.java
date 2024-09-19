@@ -4,20 +4,13 @@ public class Jugador extends Persona{
 
     private String color;
     private String nickname;
-    private int score;
+    private int position;
 
-    Jugador(String name, String lastname, int year, String color, String nickname, int score) {
-        super(name,lastname,year);
+    Jugador(String name, String lastname, int age, String nickname, String color, int position) {
+        super(name,lastname,age);
         this.color = color;
         this.nickname = nickname;
-        this.score = score;
-    }
-
-    public String getColor() {
-        return color;
-    }
-    public void setColor(String color) {
-        this.color = color;
+        this.position = position;
     }
 
     public String getNickname() {
@@ -27,11 +20,28 @@ public class Jugador extends Persona{
         this.nickname = nickname;
     }
 
-    public int getScore() {
-        return score;
+    public String getColor() {
+        return color;
     }
-    public void setScore(int score) {
-        this.score = score;
+    public void setColor(String color) {
+        this.color = color;
     }
 
+    public int getPosition() {
+        return position;
+    }
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    @Override
+    public String toString() {
+        return "Jugador{" + "nom='" + getName() + '\'' +
+                ", cognom='" + getLastname() + '\'' +
+                ", edat=" + getAge() +
+                ", color='" + color + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", posicio=" + position +
+                '}';
+    }
 }

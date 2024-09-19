@@ -1,49 +1,98 @@
 package com.example.exercici1;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class Joc implements Resultat {
 
     private int caselles;
-    private int [] players;
-    private int daus;
+    private Jugador [] players;
+    private int [] casellesOca = new int[]{5, 9, 14, 18, 23, 27, 32, 36, 41, 45, 50, 54, 59};
 
-    Joc(int caselles, int [] players, int daus) {
+    Joc(int caselles, Jugador [] players) {
         this.caselles = caselles;
         this.players = players;
-        this.daus = daus;
     }
 
-    public int  TirarDaus(){
+    public int tirarDaus(){
         Random random = new Random();
         int tirada = random.nextInt(6) + 1;
         return tirada;
     }
 
-
-    public int getCaselles() {
-        return caselles;
-    }
-    public void setCaselles(int caselles) {
-        this.caselles = caselles;
-    }
-
-    public int[] getPlayers() {
-        return players;
-    }
-    public void setPlayers(int[] players) {
-        this.players = players;
+    public boolean esOca(int posicio){
+        for (int casella : casellesOca) {
+            if (casella == posicio) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public int getDaus() {
-        return daus;
+    public int obtenirSeguentOca(int posicio) {
+        for (int casella : casellesOca) {
+            if (casella > posicio) {
+                return casella;
+            }
+        }
+        return posicio;
     }
-    public void setDaus(int daus) {
-        this.daus = daus;
+
+    public void jugarPartida() {
+
+        Scanner scanner = new Scanner(System.in);
+
+        for (Jugador jugador : players) {
+
+            boolean mogut = true;
+
+            while (mogut) {
+
+                System.out.println("Li toca tirar a " + jugador.getNickname());
+                scanner.nextLine();
+
+                int tirada = tirarDaus();
+                int novaPosicio = jugador.getPosition() + tirada;
+
+                if (novaPosicio > caselles) {
+                    System.out.println(jugador.getNickname() + " ha tirat un " + tirada + " i està a la casella " + novaPosicio);
+                    System.out.println(jugador.getNickname() + " t'has passat de la casella " + caselles);
+                    mogut = false;
+                    continue;
+                }
+
+                jugador.setPosition(novaPosicio);
+                System.out.println(jugador.getNickname() + " ha tirat un " + tirada + " i està a la casella " + novaPosicio);
+
+                if (esOca(novaPosicio)) {
+                    System.out.println(jugador.getNickname() + " ha caigut en una casella d'Oca!");
+                    novaPosicio = obtenirSeguentOca(novaPosicio);
+
+                    if (novaPosicio > caselles) {
+                        novaPosicio = caselles - (novaPosicio - caselles);
+                    }
+
+                    jugador.setPosition(novaPosicio);
+                    System.out.println(jugador.getNickname() + " avança a la casella " + novaPosicio);
+
+                } else {
+                    mogut = false;
+                }
+            }
+
+            if (guanyadorPartida() != null) {
+                break;
+            }
+        }
     }
 
     @Override
-    public Jugador JugadorGuanyador() {
+    public Jugador guanyadorPartida() {
+        for (Jugador jugador : players) {
+            if (jugador.getPosition() == caselles) {
+                return jugador;
+            }
+        }
         return null;
     }
 }
