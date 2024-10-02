@@ -13,53 +13,74 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
-        android:text="Benvinguts al Joc de l'oca!"
-        android:textSize="34sp"
+        android:text="Joc de l'oca"
         android:textColor="@color/white"
+        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/et_Jugador1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="40dp"
         android:text="Jugador1"
-        android:textSize="28sp"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/et_Jugador2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.1"
-        app:layout_constraintTop_toBottomOf="@+id/tv_Oca"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_Oca"
+        app:layout_constraintBottom_toTopOf="@+id/tv_Jugador1"/>
 
     <EditText
         android:id="@+id/et_Jugador2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="Jugador1"
-        android:textSize="28sp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="32dp"
+        android:text="Jugador2"
         android:textColor="@color/white"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.1"
-        app:layout_constraintTop_toBottomOf="@+id/tv_Oca"/>
+        app:layout_constraintStart_toEndOf="@+id/et_Jugador1"
+        app:layout_constraintTop_toBottomOf="@+id/tv_Oca"
+        app:layout_constraintBottom_toTopOf="@+id/tv_Jugador2"/>
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:layout_marginBottom="96dp"
+        android:layout_marginBottom="72dp"
         android:backgroundTint="@color/teal_200"
         android:onClick="onLogin"
-        android:text="Iniciar Partida"
+        android:text="Tirar Dau"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <TextView
+        android:id="@+id/tv_Jugador1"
+        android:layout_width="50dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="50dp"
+        android:background="@color/black"
+        app:layout_constraintEnd_toStartOf="@+id/tv_Jugador2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_Jugador1" />
 
+    <TextView
+        android:id="@+id/tv_Jugador2"
+        android:layout_width="50dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_Jugador1"
+        app:layout_constraintTop_toBottomOf="@+id/et_Jugador2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
