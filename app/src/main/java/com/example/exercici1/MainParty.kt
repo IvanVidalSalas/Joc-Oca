@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +21,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var tv_CJugador2: TextView
     lateinit var tv_alerta: TextView
     lateinit var tv_dau: TextView
+    lateinit var iv_OcaJugador1: ImageView
+    lateinit var iv_OcaJugador2: ImageView
     lateinit var joc: Joc
     lateinit var btnTirar: Button
     var tornJugador = 0
@@ -38,7 +41,8 @@ class MainActivity : AppCompatActivity() {
         tv_CJugador1 = findViewById(R.id.tv_CJugador1)
         tv_CJugador2 = findViewById(R.id.tv_CJugador2)
         btnTirar = findViewById(R.id.btntirar)
-
+        iv_OcaJugador1 = findViewById(R.id.iv_OcaJugador1)
+        iv_OcaJugador2 = findViewById(R.id.iv_OcaJugador2)
 
         btnTirar.setOnClickListener {
             iniciarPartida()
@@ -57,6 +61,8 @@ class MainActivity : AppCompatActivity() {
             tv_nJugador1.visibility = View.VISIBLE
             tv_nJugador2.visibility = View.VISIBLE
             tv_dau.visibility = View.VISIBLE
+            iv_OcaJugador1.visibility = View.INVISIBLE
+            iv_OcaJugador2.visibility = View.INVISIBLE
 
             val jugadors = arrayOf(
                 Jugador(name_Jugador1, 1),
@@ -94,6 +100,15 @@ class MainActivity : AppCompatActivity() {
         tv_nJugador2.text = "${joc.players[1].position}"
 
         if (joc.esOca(novaPosicio)) {
+
+            if (tornJugador == 0) {
+                iv_OcaJugador1.visibility = View.VISIBLE
+                iv_OcaJugador2.visibility = View.INVISIBLE
+            } else {
+                iv_OcaJugador2.visibility = View.VISIBLE
+                iv_OcaJugador1.visibility = View.INVISIBLE
+            }
+
             novaPosicio = joc.obtenirSeguentOca(novaPosicio)
 
             if (novaPosicio > joc.caselles) {
@@ -113,7 +128,5 @@ class MainActivity : AppCompatActivity() {
             tornJugador = (tornJugador + 1) % joc.players.size
         }
     }
-
-
 }
 
