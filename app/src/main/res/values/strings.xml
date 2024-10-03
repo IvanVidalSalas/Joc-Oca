@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Exercici1</string>
+    <string name="alerta">Recorda posar el nom a tots els jugadors!</string>
 </resources>

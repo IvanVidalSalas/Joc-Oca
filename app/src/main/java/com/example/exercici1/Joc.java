@@ -5,9 +5,9 @@ import java.util.Scanner;
 
 public class Joc implements Resultat {
 
-    private int caselles;
-    private Jugador [] players;
-    private int [] casellesOca = new int[]{5, 9, 14, 18, 23, 27, 32, 36, 41, 45, 50, 54, 59};
+    int caselles;
+    Jugador [] players;
+    int [] casellesOca = new int[]{5, 9, 14, 18, 23, 27, 32, 36, 41, 45, 50, 54, 59};
 
     Joc(int caselles, Jugador [] players) {
         this.caselles = caselles;
@@ -48,24 +48,24 @@ public class Joc implements Resultat {
 
             while (mogut) {
 
-                System.out.println("Li toca tirar a " + jugador.getNickname());
+                System.out.println("Li toca tirar a " + jugador.getName());
                 scanner.nextLine();
 
                 int tirada = tirarDaus();
                 int novaPosicio = jugador.getPosition() + tirada;
 
                 if (novaPosicio > caselles) {
-                    System.out.println(jugador.getNickname() + " ha tirat un " + tirada + " i està a la casella " + novaPosicio);
-                    System.out.println(jugador.getNickname() + " t'has passat de la casella " + caselles);
+                    System.out.println(jugador.getName() + " ha tirat un " + tirada + " i està a la casella " + novaPosicio);
+                    System.out.println(jugador.getName() + " t'has passat de la casella " + caselles);
                     mogut = false;
                     continue;
                 }
 
                 jugador.setPosition(novaPosicio);
-                System.out.println(jugador.getNickname() + " ha tirat un " + tirada + " i està a la casella " + novaPosicio);
+                System.out.println(jugador.getName() + " ha tirat un " + tirada + " i està a la casella " + novaPosicio);
 
                 if (esOca(novaPosicio)) {
-                    System.out.println(jugador.getNickname() + " ha caigut en una casella d'Oca!");
+                    System.out.println(jugador.getName() + " ha caigut en una casella d'Oca!");
                     novaPosicio = obtenirSeguentOca(novaPosicio);
 
                     if (novaPosicio > caselles) {
@@ -73,7 +73,7 @@ public class Joc implements Resultat {
                     }
 
                     jugador.setPosition(novaPosicio);
-                    System.out.println(jugador.getNickname() + " avança a la casella " + novaPosicio);
+                    System.out.println(jugador.getName() + " avança a la casella " + novaPosicio);
 
                 } else {
                     mogut = false;

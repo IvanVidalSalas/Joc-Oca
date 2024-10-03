@@ -6,10 +6,10 @@ public class Persona {
     private String lastname;
     private int age;
 
-    Persona(String name, String lastname, int age ) {
+    Persona(String name) {
         this.name = name;
-        this.lastname = lastname;
-        this.age = age;
+        //this.lastname = lastname;
+        //this.age = age;
     }
 
     public String getName() {

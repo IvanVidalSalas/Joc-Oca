@@ -6,10 +6,10 @@ public class Jugador extends Persona{
     private String nickname;
     private int position;
 
-    Jugador(String name, String lastname, int age, String nickname, String color, int position) {
-        super(name,lastname,age);
-        this.color = color;
-        this.nickname = nickname;
+    Jugador(String name, int position) {
+        super(name);
+        //this.color = color;
+        //this.nickname = nickname;
         this.position = position;
     }
 
@@ -30,9 +30,7 @@ public class Jugador extends Persona{
     public int getPosition() {
         return position;
     }
-    public void setPosition(int position) {
-        this.position = position;
-    }
+    public void setPosition(int position) { this.position = position; }
 
     @Override
     public String toString() {
