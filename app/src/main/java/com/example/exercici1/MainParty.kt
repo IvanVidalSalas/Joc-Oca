@@ -1,7 +1,6 @@
 package com.example.exercici1
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -20,12 +19,13 @@ class MainActivity : AppCompatActivity() {
     lateinit var tv_CJugador1: TextView
     lateinit var tv_CJugador2: TextView
     lateinit var tv_alerta: TextView
-    lateinit var tv_dau: TextView
+    lateinit var iv_dau: ImageView
     lateinit var iv_OcaJugador1: ImageView
     lateinit var iv_OcaJugador2: ImageView
     lateinit var joc: Joc
     lateinit var btnTirar: Button
     var tornJugador = 0
+    var textCanviat = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,15 +37,22 @@ class MainActivity : AppCompatActivity() {
         tv_nJugador1 = findViewById(R.id.tv_nJugador1)
         tv_nJugador2 = findViewById(R.id.tv_nJugador2)
         tv_alerta = findViewById(R.id.tv_alerta)
-        tv_dau = findViewById(R.id.tv_dau)
+        iv_dau = findViewById(R.id.iv_dau)
         tv_CJugador1 = findViewById(R.id.tv_CJugador1)
         tv_CJugador2 = findViewById(R.id.tv_CJugador2)
         btnTirar = findViewById(R.id.btntirar)
         iv_OcaJugador1 = findViewById(R.id.iv_OcaJugador1)
         iv_OcaJugador2 = findViewById(R.id.iv_OcaJugador2)
 
+
         btnTirar.setOnClickListener {
-            iniciarPartida()
+            if (!textCanviat) {
+                // Intentar iniciar la partida
+                iniciarPartida()
+            } else {
+                // Si ya cambió el texto, seguir jugando la partida
+                jugarPartida()
+            }
         }
     }
 
@@ -57,10 +64,9 @@ class MainActivity : AppCompatActivity() {
 
         if (name_Jugador1.isNotEmpty() && name_Jugador2.isNotEmpty()) {
             tv_alerta.visibility = View.INVISIBLE
-            btnTirar.text = "Tirar Dau"
             tv_nJugador1.visibility = View.VISIBLE
             tv_nJugador2.visibility = View.VISIBLE
-            tv_dau.visibility = View.VISIBLE
+            iv_dau.visibility = View.VISIBLE
             iv_OcaJugador1.visibility = View.INVISIBLE
             iv_OcaJugador2.visibility = View.INVISIBLE
 
@@ -70,6 +76,9 @@ class MainActivity : AppCompatActivity() {
             )
 
             joc = Joc(63, jugadors)
+
+            btnTirar.text = "Tirar Dau"
+            textCanviat = true
 
             jugarPartida()
 
@@ -87,7 +96,15 @@ class MainActivity : AppCompatActivity() {
         tv_CJugador2.visibility = if (tornJugador == 1) View.VISIBLE else View.INVISIBLE
 
         val tirada = Random.nextInt(1, 7)
-        tv_dau.text = tirada.toString()
+
+        when(tirada) {
+            1 -> iv_dau.setImageResource(R.mipmap.diceone)
+            2 -> iv_dau.setImageResource(R.mipmap.dicetwo)
+            3 -> iv_dau.setImageResource(R.mipmap.dicethree)
+            4 -> iv_dau.setImageResource(R.mipmap.dicefour)
+            5 -> iv_dau.setImageResource(R.mipmap.dicefive)
+            6 -> iv_dau.setImageResource(R.mipmap.dicesix)
+        }
 
         var novaPosicio = jugador.position + tirada
 
@@ -99,14 +116,17 @@ class MainActivity : AppCompatActivity() {
         tv_nJugador1.text = "${joc.players[0].position}"
         tv_nJugador2.text = "${joc.players[1].position}"
 
+        var repetirTorn = false
+
+        iv_OcaJugador1.visibility = View.INVISIBLE
+        iv_OcaJugador2.visibility = View.INVISIBLE
+
         if (joc.esOca(novaPosicio)) {
 
             if (tornJugador == 0) {
                 iv_OcaJugador1.visibility = View.VISIBLE
-                iv_OcaJugador2.visibility = View.INVISIBLE
             } else {
                 iv_OcaJugador2.visibility = View.VISIBLE
-                iv_OcaJugador1.visibility = View.INVISIBLE
             }
 
             novaPosicio = joc.obtenirSeguentOca(novaPosicio)
@@ -115,17 +135,24 @@ class MainActivity : AppCompatActivity() {
                 novaPosicio = joc.caselles - (novaPosicio - joc.caselles)
             }
             jugador.position = novaPosicio
+            repetirTorn = true
         }
 
         tv_nJugador1.text = "${joc.players[0].position}"
         tv_nJugador2.text = "${joc.players[1].position}"
 
         if (joc.guanyadorPartida() != null) {
+
             tv_alerta.text = "Enhorabona ${jugador.getName()}, has guanyat la partida!"
             tv_alerta.visibility = View.VISIBLE
+
+            btnTirar.isEnabled = false
+
         } else {
 
-            tornJugador = (tornJugador + 1) % joc.players.size
+            if (!repetirTorn) {
+                tornJugador = (tornJugador + 1) % joc.players.size
+            }
         }
     }
 }
