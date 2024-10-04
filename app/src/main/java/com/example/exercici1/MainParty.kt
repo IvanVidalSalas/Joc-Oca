@@ -47,10 +47,8 @@ class MainActivity : AppCompatActivity() {
 
         btnTirar.setOnClickListener {
             if (!textCanviat) {
-                // Intentar iniciar la partida
                 iniciarPartida()
             } else {
-                // Si ya cambió el texto, seguir jugando la partida
                 jugarPartida()
             }
         }
@@ -149,7 +147,6 @@ class MainActivity : AppCompatActivity() {
             btnTirar.isEnabled = false
 
         } else {
-
             if (!repetirTorn) {
                 tornJugador = (tornJugador + 1) % joc.players.size
             }
